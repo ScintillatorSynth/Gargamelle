@@ -1,0 +1,38 @@
+%{
+// Generated file, please edit original file at src/Paths.cpp.in
+#include "Paths.hpp"
+
+#include <cstring>
+
+// Some of the gperf generated code uses the register keyword, which is deprecated in C++17.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wregister"
+
+namespace {
+
+%}
+%language=C++
+%struct-type
+struct PathsPair { const char* name; ggml::handler::Paths path; };
+%%
+dump,   ggml::Paths::kDump
+hello,  ggml::Paths::kHello
+%%
+
+} // namespace
+
+#pragma clang diagnostic pop
+
+namespace scin { namespace base {
+
+Paths getPath(const std::string& path) {
+    const PathsPair* pair = Perfect_Hash::in_word_set(path.data(), path.size());
+    if (!pair) {
+        return Paths::kNotFound;
+    }
+    return pair->path;
+}
+
+} // namespace base
+
+} // namespace scin

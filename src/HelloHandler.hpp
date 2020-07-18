@@ -2,9 +2,8 @@
 #define SRC_HELLO_HANDLER_HPP_
 
 #include <proxygen/httpserver/RequestHandler.h>
-#include <proxygen/httpserver/RequestHandlerFactory.h>
 
-namespace garg { namespace handler {
+namespace ggml { namespace handler {
 
 class HelloHandler : public proxygen::RequestHandler {
 public:
@@ -18,15 +17,7 @@ public:
     void onError(proxygen::ProxygenError err) noexcept override;
 };
 
-class HelloHandlerFactory : public proxygen::RequestHandlerFactory {
-public:
-    explicit HelloHandlerFactory();
-    void onServerStart(folly::EventBase*) noexcept override;
-    void onServerStop() noexcept override;
-    proxygen::RequestHandler* onRequest(proxygen::RequestHandler*, proxygen::HTTPMessage*) noexcept override;
-};
-
 } // namespace handler
-} // namespace garg
+} // namespace ggml
 
 #endif // SRC_HELLO_HANDLER_HPP_

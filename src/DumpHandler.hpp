@@ -2,9 +2,8 @@
 #define SRC_DUMP_HANDLER_HPP_
 
 #include <proxygen/httpserver/RequestHandler.h>
-#include <proxygen/httpserver/RequestHandlerFactory.h>
 
-namespace garg { namespace handler {
+namespace ggml { namespace handler {
 
 class DumpHandler : public proxygen::RequestHandler {
 public:
@@ -27,17 +26,8 @@ private:
     std::unique_ptr<folly::IOBuf> m_body;
 };
 
-class DumpHandlerFactory : public proxygen::RequestHandlerFactory {
-public:
-    explicit DumpHandlerFactory(const std::string& dumpPath);
-    void onServerStart(folly::EventBase*) noexcept override;
-    void onServerStop() noexcept override;
-    proxygen::RequestHandler* onRequest(proxygen::RequestHandler*, proxygen::HTTPMessage*) noexcept override;
-private:
-    std::string m_dumpPath;
-};
 
 } // namespace handler
-} // namespace garg
+} // namespace ggml
 
 #endif // SRC_DUMP_HANDLER_HPP_

@@ -7,9 +7,8 @@
 #include <folly/portability/Unistd.h>
 #include <proxygen/httpserver/RequestHandler.h>
 #include <proxygen/httpserver/ResponseBuilder.h>
-#include <proxygen/httpserver/RequestHandlerFactory.h>
 
-namespace garg { namespace handler {
+namespace ggml { namespace handler {
 
 DumpHandler::DumpHandler(const std::string& dumpPath): m_valid(false), m_dumpPath(dumpPath), m_dumpFile(-1) {}
 
@@ -78,13 +77,5 @@ void DumpHandler::writeFile(folly::EventBase* evb) {
     close(m_dumpFile);
 }
 
-// ==== DumpHandlerFactory
-DumpHandlerFactory::DumpHandlerFactory(const std::string& dumpPath): m_dumpPath(dumpPath) {}
-void DumpHandlerFactory::onServerStart(folly::EventBase*) noexcept {}
-void DumpHandlerFactory::onServerStop() noexcept {}
-proxygen::RequestHandler* DumpHandlerFactory::onRequest(proxygen::RequestHandler*, proxygen::HTTPMessage*) noexcept {
-    return new DumpHandler(m_dumpPath);
-}
-
 } // namespace handler
-} // namespace garg
+} // namespace ggml

@@ -1,4 +1,5 @@
 #include "DumpHandler.hpp"
+#include "HandlerFactory.hpp"
 #include "HelloHandler.hpp"
 
 #include <folly/portability/GFlags.h>
@@ -41,8 +42,7 @@ int main(int argc, char* argv[]) {
     options.shutdownOn = {SIGINT, SIGTERM};
     options.enableContentCompression = true;
     options.handlerFactories = proxygen::RequestHandlerChain()
-        .addThen<garg::handler::DumpHandlerFactory>(FLAGS_dumpPath)
-        .addThen<garg::handler::HelloHandlerFactory>().build();
+        .addThen<ggml::handler::HandlerFactory>(FLAGS_dumpPath).build();
     options.h2cEnabled = false;
 
     proxygen::HTTPServer server(std::move(options));

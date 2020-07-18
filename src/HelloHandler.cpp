@@ -1,9 +1,8 @@
 #include "HelloHandler.hpp"
 
 #include <proxygen/httpserver/ResponseBuilder.h>
-#include <proxygen/httpserver/RequestHandlerFactory.h>
 
-namespace garg { namespace handler {
+namespace ggml { namespace handler {
 
 HelloHandler::HelloHandler() {}
 
@@ -30,13 +29,5 @@ void HelloHandler::onError(proxygen::ProxygenError err) noexcept {
     delete this;
 }
 
-// ==== HelloHandlerFactory
-HelloHandlerFactory::HelloHandlerFactory() {}
-void HelloHandlerFactory::onServerStart(folly::EventBase*) noexcept {}
-void HelloHandlerFactory::onServerStop() noexcept {}
-proxygen::RequestHandler* HelloHandlerFactory::onRequest(proxygen::RequestHandler*, proxygen::HTTPMessage*) noexcept {
-    return new HelloHandler();
-}
-
 } // namespace handler
-} // namespace garg
+} // namespace ggml
