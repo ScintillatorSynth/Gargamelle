@@ -1,11 +1,13 @@
 #ifndef SRC_PATHS_HPP_
 #define SRC_PATHS_HPP_
 
+#include <cstddef>
+
 namespace ggml { namespace handler {
 
-enum Path { kDump, kHello, kNotFound };
+enum Paths { kDump, kHello, kNotFound };
 
-Path getPath(const std::string& path);
+Paths getPath(const char* path, size_t length);
 
 } // namespace handler
 } // namespace ggml

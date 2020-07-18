@@ -7,12 +7,14 @@ namespace ggml { namespace handler {
 
 class HandlerFactory : public proxygen::RequestHandlerFactory {
 public:
-    explicit HandlerFactory(const std::string& dumpPath);
+    // apiPrefix is typically "/api/" and needs to include that final slash or we won't parse URLs correctly.
+    explicit HandlerFactory(const std::string& apiPrefix, const std::string& dumpPath);
     void onServerStart(folly::EventBase*) noexcept override;
     void onServerStop() noexcept override;
     proxygen::RequestHandler* onRequest(proxygen::RequestHandler*, proxygen::HTTPMessage*) noexcept override;
 
 private:
+    std::string m_apiPrefix;
     std::string m_dumpPath;
 };
 

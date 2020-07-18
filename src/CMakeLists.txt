@@ -1,5 +1,6 @@
 include_directories(
     "${INSTALL_EXT}/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
 find_program(gperf_program gperf)
@@ -19,10 +20,13 @@ add_executable(gargamelle
     ${CMAKE_CURRENT_BINARY_DIR}/Paths.cpp
     DumpHandler.cpp
     DumpHandler.hpp
+    ErrorHandler.cpp
+    ErrorHandler.hpp
     HandlerFactory.cpp
     HandlerFactory.hpp
     HelloHandler.cpp
     HelloHandler.hpp
+    Paths.hpp
     gargamelle.cpp
 )
 

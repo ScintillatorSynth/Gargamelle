@@ -15,24 +15,23 @@ namespace {
 %struct-type
 struct PathsPair { const char* name; ggml::handler::Paths path; };
 %%
-dump,   ggml::Paths::kDump
-hello,  ggml::Paths::kHello
+dump,   ggml::handler::Paths::kDump
+hello,  ggml::handler::Paths::kHello
 %%
 
 } // namespace
 
 #pragma clang diagnostic pop
 
-namespace scin { namespace base {
+namespace ggml { namespace handler {
 
-Paths getPath(const std::string& path) {
-    const PathsPair* pair = Perfect_Hash::in_word_set(path.data(), path.size());
+Paths getPath(const char* path, size_t length) {
+    const PathsPair* pair = Perfect_Hash::in_word_set(path, length);
     if (!pair) {
         return Paths::kNotFound;
     }
     return pair->path;
 }
 
-} // namespace base
-
-} // namespace scin
+} // namespace handler
+} // namespace ggml

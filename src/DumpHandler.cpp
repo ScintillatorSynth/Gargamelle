@@ -16,14 +16,12 @@ void DumpHandler::onRequest(std::unique_ptr<proxygen::HTTPMessage> request) noex
     // POST requests only, and guid query parameter required
     auto method = request->getMethod();
     if (method != proxygen::HTTPMethod::POST || !request->hasQueryParam("guid")) {
-        LOG(ERROR) << request->getURL() << " bad request.";
-        proxygen::ResponseBuilder(downstream_).status(404, "Not Found").body("file not found").sendWithEOM();
+        LOG(ERROR) << "invalid dump request either not POST or missing guid";
         return;
     }
 
     m_guid = request->getQueryParam("guid");
-    m_dumpFile = folly::openNoInt((m_dumpPath + m_guid + ".gz").data(),
-            O_CREAT | O_TRUNC | O_RDWR);
+    m_dumpFile = folly::openNoInt((m_dumpPath + m_guid + ".gz").data(), O_CREAT | O_TRUNC | O_RDWR);
     if (m_dumpFile < 0) {
         LOG(ERROR) << "failed to open file to write dump!";
         return;
@@ -44,7 +42,7 @@ void DumpHandler::onEOM() noexcept {
         folly::getCPUExecutor()->add(std::bind(&DumpHandler::writeFile, this,
                     folly::EventBaseManager::get()->getEventBase()));
     } else {
-        proxygen::ResponseBuilder(downstream_).status(400, "Not Found").sendWithEOM();
+        proxygen::ResponseBuilder(downstream_).status(404, "Not Found").body("Not Found").sendWithEOM();
     }
 }
 
