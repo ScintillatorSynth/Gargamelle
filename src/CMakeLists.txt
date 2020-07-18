@@ -6,6 +6,8 @@ add_executable(gargamelle
     gargamelle.cpp
     DumpHandler.cpp
     DumpHandler.hpp
+    HelloHandler.cpp
+    HelloHandler.hpp
 )
 
 target_compile_options(gargamelle PRIVATE
