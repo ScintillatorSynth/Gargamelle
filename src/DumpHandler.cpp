@@ -24,8 +24,8 @@ void DumpHandler::onRequest(std::unique_ptr<proxygen::HTTPMessage> request) noex
     m_guid = request->getQueryParam("guid");
 
     auto now = std::chrono::system_clock::now().time_since_epoch();
-    std::string filePath = fmt::format("{}{}_{}.gz", m_dumpPath, m_guid,
-            std::chrono::duration_cast<std::chrono::milliseconds>(now).count());
+    std::string filePath = fmt::format("{}{:016x}_{}.gz", m_dumpPath,
+            std::chrono::duration_cast<std::chrono::milliseconds>(now).count(), m_guid);
 
     m_dumpFile = folly::openNoInt(filePath.data(), O_CREAT | O_TRUNC | O_RDWR);
     if (m_dumpFile < 0) {
